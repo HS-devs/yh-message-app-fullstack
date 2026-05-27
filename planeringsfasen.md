@@ -8,12 +8,12 @@ Express/Backend: 1
 
 Databas: 5
 
-<b>Om tillitsgränserna:</b> 
+<b>Om tillitsgränserna:</b><break>
 Vi har delat upp systemet med två tydliga tillitsgränser. 
 Allt till vänster, Browser/Frontend, körs på användarens egen enhet. 
 Det betyder att det är en osäker miljö som vi inte kan kontrollera. 
 Användaren kan öppna Developer Tools och ändra i koden om de vill. 
-Allt till höger, API-serven och Databasen, körs på vår egen server. Det är vår säkra miljö där vi sätter reglerna.
+Allt till höger, API-serven och Databasen, körs på vår egen server. Det är vår säkra miljö där vi sätter reglerna.</break>
 
 Pilarna (T & I): 
 De pilarna som går till höger representerar data som skickas in i systemet. Här har vi satt ett T (Tampering), eftersom det största hotet är att någon manipulerar datan på vägen (t.ex. ändrar i ett HTTP-anrop eller skickar med skadlig kod). De Tillitsgränspilarna till vänster är svaren som går tillbaka. Här har vi satt ett I (Information Disclosure), eftersom risken där är att vi råkar läcka ut känslig data i våra JSON-svar.
