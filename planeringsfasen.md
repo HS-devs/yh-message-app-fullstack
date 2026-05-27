@@ -9,20 +9,25 @@ Express/Backend: 1
 Databas: 5
 
 <b>Om tillitsgränserna:</b><break></break>
+
 Vi har delat upp systemet med två tydliga tillitsgränser. 
 Allt till vänster, Browser/Frontend, körs på användarens egen enhet. 
 Det betyder att det är en osäker miljö som vi inte kan kontrollera. 
 Användaren kan öppna Developer Tools och ändra i koden om de vill. 
 Allt till höger, API-serven och Databasen, körs på vår egen server. Det är vår säkra miljö där vi sätter reglerna.
 
-Pilarna (T & I): 
+<b>Pilarna (T & I):</b>
+
 De pilarna som går till höger representerar data som skickas in i systemet. Här har vi satt ett T (Tampering), eftersom det största hotet är att någon manipulerar datan på vägen (t.ex. ändrar i ett HTTP-anrop eller skickar med skadlig kod). De Tillitsgränspilarna till vänster är svaren som går tillbaka. Här har vi satt ett I (Information Disclosure), eftersom risken där är att vi råkar läcka ut känslig data i våra JSON-svar.
 
-Kopplingen till våra säkerhetskrav: 
+<b>Kopplingen till våra säkerhetskrav:</b>
+
 Eftersom vi vet att pilarna hotas av T och I, krävs att all kommunikation sker via krypterad HTTPS. Och eftersom vi vet att vi inte kan lita på Frontend-boxen (eftersom den ligger i den osäkra zonen), har vi lagt ett strikt säkerhetskrav på att Express/Backend måste göra all indatavalidering och behörighetskontroll innan något sparas i Databasen.
 
 
-1. Identifierade säkerhetsrisker och hotscenarier (Hotmodellering)
+<b>1. Identifierade säkerhetsrisker och hotscenarier (Hotmodellering)</b>
+
+
 Utifrån din skiss och ESTRID-klassificeringen identifieras följande hotscenarier:
 
 
