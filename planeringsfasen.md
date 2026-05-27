@@ -1,14 +1,11 @@
 # Inlämning 1 - Planeringsfasen
 
 Browser: 0
-
 Frontend: 1
-
 Express/Backend: 1
-
 Databas: 5
 
-<b>Om tillitsgränserna:</b><break></break>
+<b>Om tillitsgränserna:</b>
 Vi har delat upp systemet med två tydliga tillitsgränser. 
 Allt till vänster, Browser/Frontend, körs på användarens egen enhet. 
 Det betyder att det är en osäker miljö som vi inte kan kontrollera. 
