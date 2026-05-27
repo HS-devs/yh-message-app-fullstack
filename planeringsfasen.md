@@ -30,42 +30,43 @@ Eftersom vi vet att pilarna hotas av T och I, krävs att all kommunikation sker 
 Utifrån från vår systemskiss och ESTRID-klassificeringen identifieras följande hotscenarier:
 
 
-Hot mot pilen "Öppnar" (T - Tampering): Nedladdning av skadlig kod (Man-in-the-Middle)
+<b>Hot mot pilen "Öppnar" (T - Tampering): Nedladdning av skadlig kod (Man-in-the-Middle)</b>
 
-Scenario: När en användare öppnar applikationen i sin Browser (0) och laddar ner Frontend (1 ESRD) över ett osäkert nätverk, kan en angripare avlyssna och manipulera (Tampering) källkoden. Angriparen byter ut er React-kod mot skadlig kod för att stjäla framtida inloggningsuppgifter.
-
-
-Hot mot pilen "HTTP-anrop" (T - Tampering): Injektionsattacker mot Express
-
-Scenario: Eftersom data skickas från den osäkra användarmiljön, kan en elak användare manipulera ett HTTP-anrop och skicka med skadliga databasskript (t.ex. SQL-injektion) i meddelandefältet. Om Express skickar detta vidare till Databas (5 E) kan data raderas eller läckas.
+<b>Scenario:</b> När en användare öppnar applikationen i sin Browser (0) och laddar ner Frontend (1 ESRD) över ett osäkert nätverk, kan en angripare avlyssna och manipulera (Tampering) källkoden. Angriparen byter ut er React-kod mot skadlig kod för att stjäla framtida inloggningsuppgifter.
 
 
-Hot inuti boxen "Express/Backend & API" (ED - Elevation of Privilege & Denial of Service)
+<b>Hot mot pilen "HTTP-anrop" (T - Tampering): Injektionsattacker mot Express</b>
 
-Scenario (E): En vanlig inloggad användare manipulerar ID-parametern i sitt HTTP-anrop (t.ex. ändrar meddelande-ID i URL:en) för att försöka redigera eller radera en annan användares meddelande, och lyckas därmed höja sina rättigheter (Elevation of Privilege).
-
-Scenario (D): En angripare utnyttjar att API:et är publikt och bombarderar Express-boxen med miljontals automatiska HTTP-anrop (Denial of Service) så att servern överbelastas och kraschar för vanliga användare.
+<b>Scenario:>/b> Eftersom data skickas från den osäkra användarmiljön, kan en elak användare manipulera ett HTTP-anrop och skicka med skadliga databasskript (t.ex. SQL-injektion) i meddelandefältet. Om Express skickar detta vidare till Databas (5 E) kan data raderas eller läckas.
 
 
-Hot mot pilen "JSON-svar" (I - Information Disclosure): Läckage av känslig data
+<b>Hot inuti boxen "Express/Backend & API" (ED - Elevation of Privilege & Denial of Service)</b>
 
-Scenario: När Express hämtar data från databasen för att skicka tillbaka ett svar, råkar API:et skicka med för mycket information i JSON-objektet (t.ex. lösenordshashar eller interna system-ID:n) som sedan exponeras i användarens Browser.
+<b>Scenario (E):</b> En vanlig inloggad användare manipulerar ID-parametern i sitt HTTP-anrop (t.ex. ändrar meddelande-ID i URL:en) för att försöka redigera eller radera en annan användares meddelande, och lyckas därmed höja sina rättigheter (Elevation of Privilege).
+
+<b>Scenario (D):</b> En angripare utnyttjar att API:et är publikt och bombarderar Express-boxen med miljontals automatiska HTTP-anrop (Denial of Service) så att servern överbelastas och kraschar för vanliga användare.
+
+
+<b>Hot mot pilen "JSON-svar" (I - Information Disclosure): Läckage av känslig data</b>
+
+<b>Scenario:</b> När Express hämtar data från databasen för att skicka tillbaka ett svar, råkar API:et skicka med för mycket information i JSON-objektet (t.ex. lösenordshashar eller interna system-ID:n) som sedan exponeras i användarens Browser.
+
 
 
 <b>2. Fyra säkerhetskrav formulerade i kravspecifikationen</b>
 För att motverka de identifierade hoten ovan och säkra tillitsgränserna sätts följande krav:
 
-Krav 1: Kryptering i rörelse (Motverkar T och I på dataflödena)
+<b>Krav 1: Kryptering i rörelse (Motverkar T och I på dataflödena)</b>
 Applikationen ska tvinga fram krypterad HTTPS-kommunikation för alla anrop och svar mellan Browser, Frontend och Express för att förhindra avlyssning och manipulering av data i rörelse.
 
 
-Krav 2: Indatavalidering på serversidan (Motverkar T i HTTP-anrop)
-Express-backenden ska validera och sanera (rensa) all indata från inkommande HTTP-anrop innan den bearbetas eller skickas vidare till Databasen, för att stoppa injektionsattacker och XSS.
+<b>Krav 2: Indatavalidering på serversidan (Motverkar T i HTTP-anrop)</b>
+Express-backenden ska validera och rensa all indata från inkommande HTTP-anrop innan den bearbetas eller skickas vidare till Databasen, för att stoppa injektionsattacker och XSS.
 
 
-Krav 3: Strikt behörighetskontroll vid dataändring (Motverkar E i Express)
+<b>Krav 3: Strikt behörighetskontroll vid dataändring (Motverkar E i Express)</b>
 Användaren ska i inloggat läge endast kunna redigera och radera sina egna meddelanden; Express-backenden måste verifiera att den autentiserade användarens ID matchar meddelandets ägar-ID innan ändringen godkänns i Databasen.
 
 
-Krav 4: Rate Limiting för resursskydd (Motverkar D i Express)
-Express-API:et ska begränsa antalet tillåtna HTTP-anrop per IP-adress (t.ex. max 100 anrop per minut) för att skydda applikationen mot DoS överbelastning och automatiserade brute force-attacker.
+<b>Krav 4: Rate Limiting för resursskydd (Motverkar D i Express)<b/>
+Express/API:et ska begränsa antalet tillåtna HTTP-anrop per IP-adress (t.ex. max 100 anrop per minut) för att skydda applikationen mot DoS överbelastning och automatiserade brute force-attacker.
