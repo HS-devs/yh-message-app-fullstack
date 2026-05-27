@@ -1,5 +1,7 @@
 Jag testar för att se om ni kan läsa detta?
 
+Nu testar jag att ändra
+
 # Inlämning 1 - Planeringsfasen
 Browser: 0
 Frontend: 1
