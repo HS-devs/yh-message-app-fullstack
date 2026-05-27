@@ -37,7 +37,7 @@ Utifrån från vår systemskiss och ESTRID-klassificeringen identifieras följan
 
 <b>Hot mot pilen "HTTP-anrop" (T - Tampering): Injektionsattacker mot Express</b>
 
-<b>Scenario:>/b> Eftersom data skickas från den osäkra användarmiljön, kan en elak användare manipulera ett HTTP-anrop och skicka med skadliga databasskript (t.ex. SQL-injektion) i meddelandefältet. Om Express skickar detta vidare till Databas (5 E) kan data raderas eller läckas.
+<b>Scenario:</b> Eftersom data skickas från den osäkra användarmiljön, kan en elak användare manipulera ett HTTP-anrop och skicka med skadliga databasskript (t.ex. SQL-injektion) i meddelandefältet. Om Express skickar detta vidare till Databas (5 E) kan data raderas eller läckas.
 
 
 <b>Hot inuti boxen "Express/Backend & API" (ED - Elevation of Privilege & Denial of Service)</b>
@@ -68,5 +68,5 @@ Express-backenden ska validera och rensa all indata från inkommande HTTP-anrop 
 Användaren ska i inloggat läge endast kunna redigera och radera sina egna meddelanden; Express-backenden måste verifiera att den autentiserade användarens ID matchar meddelandets ägar-ID innan ändringen godkänns i Databasen.
 
 
-<b>Krav 4: Rate Limiting för resursskydd (Motverkar D i Express)<b/>
+<b>Krav 4: Rate Limiting för resursskydd (Motverkar D i Express)</b>
 Express/API:et ska begränsa antalet tillåtna HTTP-anrop per IP-adress (t.ex. max 100 anrop per minut) för att skydda applikationen mot DoS överbelastning och automatiserade brute force-attacker.
