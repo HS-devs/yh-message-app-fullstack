@@ -52,7 +52,8 @@ Utifrån från vår systemskiss och ESTRID-klassificeringen identifieras följan
 
 
 ## 2. Fyra säkerhetskrav formulerade i kravspecifikationen
-    För att motverka de identifierade hoten ovan och säkra tillitsgränserna sätts följande krav:
+    
+För att motverka de identifierade hoten ovan och säkra tillitsgränserna sätts följande krav:
 
 - ### Krav 1: Kryptering i rörelse (Motverkar T och I på dataflödena)
     Applikationen ska tvinga fram krypterad HTTPS-kommunikation för alla anrop och svar mellan Browser, Frontend och Express för att förhindra avlyssning och manipulering av data i rörelse.
