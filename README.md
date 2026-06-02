@@ -8,3 +8,7 @@ Nathalie Loyd
 hejhejtesttest
 
 Henrik Söderqvist
+
+Server.js app.delete rad 168-178
+Index.css OKad
+Server.js app.get rad 126-137

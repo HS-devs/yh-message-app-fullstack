@@ -136,6 +136,9 @@ app.get("/messages", async (req, res) => {
   }
 })
 
+//Rate Limiting för resursskydd, gäller Denial of Service (överbelastning) i STRIDE.
+// Vi bör lägga till en blockering (en limiter) som stoppar en enskild användare från att göra för många anrop per minut.
+
 app.post("/messages", authenticateUser, async (req, res) => {
   const message = new Message({ message: req.body.message, user: req.user._id })
   try {
@@ -176,6 +179,10 @@ app.delete("/messages/:id", async (req, res) => {
     res.status(400).json({ error: "Could not delete message" })
   }
 })
+
+//Strikt behörighetskontroll vid dataändring. Motverkar E (Elevation of Privilege) i STRIDE inom Express. 
+// Koden raderar meddelandet utan att kontrollera vem användaren är. 
+// Vi måste modifiera koden så att den jämför den inloggade användarens ID med meddelandets userId innan raderingen tillåts.
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`)
