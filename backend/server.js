@@ -193,16 +193,9 @@ app.delete("/messages/:id", async (req, res) => {
   try {
     const message = await Message.findById(req.params.id)
     if (!message) return res.status(404).json({ error: "Message not found" })
-
-// 1. Vi lägger till "authenticateUser" här för att tvinga fram inloggning och få fram användarens ID
-// 2. NY KONTROLL: Vi jämför meddelandets ägare med den inloggade användaren.
-    // Vi gör om ID till text (.toString()) för att datorn ska kunna jämföra dem korrekt.
-    // if (message.user.toString() !== req.user.userId.toString()) {
-    //   // Om det INTE är samma person, stoppar vi anropet med felkod 403 (Förbjudet)
-    //   return res.status(403).json({ error: "You are not authorized to delete this message" })
     }
 
-    // Hit kommer koden BARA om kontrollen ovan var godkänd
+    // Hit kommer koden BARA om kontrollen nedan var godkänd
     await message.deleteOne()
     res.status(204).send()
   } catch (error) {
@@ -213,6 +206,12 @@ app.delete("/messages/:id", async (req, res) => {
 //Strikt behörighetskontroll vid dataändring. Motverkar E (Elevation of Privilege) i STRIDE inom Express. 
 // Koden raderar meddelandet utan att kontrollera vem användaren är. 
 // Vi måste modifiera koden så att den jämför den inloggade användarens ID med meddelandets userId innan raderingen tillåts.
+// 1. Vi lägger till "authenticateUser" här för att tvinga fram inloggning och få fram användarens ID
+// 2. NY KONTROLL: Vi jämför meddelandets ägare med den inloggade användaren.
+    // Vi gör om ID till text (.toString()) för att datorn ska kunna jämföra dem korrekt.
+    // if (message.user.toString() !== req.user.userId.toString()) {
+    //   // Om det INTE är samma person, stoppar vi anropet med felkod 403 (Förbjudet)
+    //   return res.status(403).json({ error: "You are not authorized to delete this message" })
 
 
 app.listen(PORT, () => {
