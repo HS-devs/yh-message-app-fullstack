@@ -139,6 +139,7 @@ app.get("/messages", async (req, res) => {
 //Rate Limiting för resursskydd, gäller Denial of Service (överbelastning) i STRIDE.
 // Vi bör lägga till en blockering (en limiter) som stoppar en enskild användare från att göra för många anrop per minut.
 
+
 app.post("/messages", authenticateUser, async (req, res) => {
   const message = new Message({ message: req.body.message, user: req.user._id })
   try {
@@ -168,13 +169,17 @@ app.patch("/messages/:id", authenticateUser, async (req, res) => {
   }
 })
 
-// 1. Vi lägger till "authenticateUser" här för att tvinga fram inloggning och få fram användarens ID
+// För att säkerställa att endast ägaren av ett meddelande kan redigera det, kontrollerade vi att i PATCH-routen för uppdatering av meddelanden.
+// Detta fanns redan och den jämför den inloggade användarens ID (från JWT-token) med det userId som är kopplat till meddelandet i databasen.
+
+
 app.delete("/messages/:id", async (req, res) => { 
   if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid message ID" })
   try {
     const message = await Message.findById(req.params.id)
     if (!message) return res.status(404).json({ error: "Message not found" })
 
+// 1. Vi lägger till "authenticateUser" här för att tvinga fram inloggning och få fram användarens ID
 // 2. NY KONTROLL: Vi jämför meddelandets ägare med den inloggade användaren.
     // Vi gör om ID till text (.toString()) för att datorn ska kunna jämföra dem korrekt.
     // if (message.user.toString() !== req.user.userId.toString()) {
@@ -193,6 +198,7 @@ app.delete("/messages/:id", async (req, res) => {
 //Strikt behörighetskontroll vid dataändring. Motverkar E (Elevation of Privilege) i STRIDE inom Express. 
 // Koden raderar meddelandet utan att kontrollera vem användaren är. 
 // Vi måste modifiera koden så att den jämför den inloggade användarens ID med meddelandets userId innan raderingen tillåts.
+
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`)
