@@ -7,13 +7,13 @@ Nathalie Loyd
 Henrik Söderqvist
 
 Server.js app.delete rad 168-178
-Jag har föreslagit en kodändring med förklaring. 
+- Jag har föreslagit en kodändring med förklaring. 
 
-Index.css OKad
+Index.css 
+- OKad
 
 Server.js app.get rad 124-157
-Jag har föreslagt en kodändring med förklaring.
+- Jag har föreslagt en kodändring med förklaring.
 
-seever.js app.patch rad 172 - 173
-
+Sever.js app.patch rad 172 - 173
 
