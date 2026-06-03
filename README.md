@@ -16,3 +16,7 @@ Index.css OKad
 Server.js app.get rad 126-137
 
 seever.js app.patch rad 172 - 173
+Server.js app.get rad 124-157
+Jag har föreslagt en kodändring med förklaring.
+
+

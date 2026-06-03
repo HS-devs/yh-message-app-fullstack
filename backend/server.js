@@ -135,9 +135,24 @@ app.get("/messages", async (req, res) => {
     res.status(500).json({ message: "Could not fetch messages" })
   }
 })
+//Rate Limiting för resursskydd, gäller Denial of Service (överbelastning) i STRIDE. En angripare kan skicka detta anrop 50 000 gånger i sekunden och krascha servern.
+//Vi bör lägga till en blockering (en limiter) som stoppar en angripare från att göra för många anrop per minut.
+//Vi föreslår att använda Rate Limiting-middleware (express-rate-limit)
+//Node.js använder standardverktyget express-rate-limit för att lösa detta. Det läggs till högst upp i filen, och sedan appliceras det på endpoint.
 
-//Rate Limiting för resursskydd, gäller Denial of Service (överbelastning) i STRIDE.
-// Vi bör lägga till en blockering (en limiter) som stoppar en enskild användare från att göra för många anrop per minut.
+// 1. Importera verktyget för hastighetsbegränsning (detta görs över app.get)
+// const rateLimit = require("express-rate-limit");
+
+// 2. Definiera reglerna: Max 100 anrop per 15 minuter från samma IP (detta läggs under Const rateLimit)
+// const messageLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minuter i millisekunder
+//   max: 100, // Begränsa varje IP till 100 anrop per fönster
+//   message: { error: "Too many requests, please try again later." }
+// });
+
+// 3. Lägg till 'messageLimiter' som ett filter i din existerande app.get-kod 
+// app.get("/messages", messageLimiter, async (req, res) => {
+
 
 
 app.post("/messages", authenticateUser, async (req, res) => {
