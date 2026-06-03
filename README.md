@@ -1,10 +1,8 @@
 # yh-message-app-fullstack
 Sarah Tjellander
-Nu testar jag flödet
 - Har testat formulera texten på inlämning FAS 1 enligt Markdown guide på Dicso
 
 Nathalie Loyd
-hejhejtesttest
 
 Henrik Söderqvist
 
@@ -13,10 +11,9 @@ Jag har föreslagit en kodändring med förklaring.
 
 Index.css OKad
 
-Server.js app.get rad 126-137
-
-seever.js app.patch rad 172 - 173
 Server.js app.get rad 124-157
 Jag har föreslagt en kodändring med förklaring.
+
+seever.js app.patch rad 172 - 173
 
 
