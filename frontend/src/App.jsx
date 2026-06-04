@@ -71,6 +71,11 @@ export const App = () => {
           }}
         />
       )}
+
+//Kod körs direkt i användarens webbläsaren. Koden skriver ut hela objektet, inkl hemligt accessToken. Vem som helst kan öppna webbläsarens utvecklarverktyg och se det.
+//Klassiskt misstag att logga känslig information i frontend. Ta bort console.log som skriver ut hela användarobjektet inklusive JWT-token.
+
+
       {error && <p className="error">{error}</p>}
       <PostMessage 
         newMessage={addNewPost} 

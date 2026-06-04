@@ -39,6 +39,10 @@ export const AuthModal = ({ mode, onClose, onSuccess }) => {
     }
   }
 
+//Kod körs direkt i användarens webbläsaren. Koden skriver ut hela objektet, inkl hemligt accessToken. Vem som helst kan öppna webbläsarens utvecklarverktyg och se det.
+//Klassiskt misstag att logga känslig information i frontend. Ta bort console.log, två rader.
+
+
   return (
     <div onClick={onClose}>
       <form

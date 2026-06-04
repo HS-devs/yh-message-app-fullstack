@@ -97,6 +97,49 @@ app.post("/login", async (req, res) => {
       })
     }
 
+    //Dataläcka med felmeddelande. FRÅN FAS 1: Hot mot pilen "JSON-svar" (I - Information Disclosure): Läckage av känslig data.
+    // Angriparen får reda på om användaren redan finns eller inte eftersom svaret är "Password is incorrect" eller "No account found with that username or email". 
+    // För att undvika detta bör vi använda ett generellt felmeddelande som inte avslöjar vilken del av inloggningen som misslyckades.
+    // Givet val för angripare att använda Brute Force/Denail of Service (DoS) i STRIDE, där de kan försöka gissa lösenordet genom att göra många inloggningsförsök.
+    // Lägga till en Rate Limiter som en spärr specifikt för inloggningen (Krav 4 FRÅN FAS 1). Max 5 försök/15 min per IP-adress.
+    
+//const rateLimit = require("express-rate-limit");
+
+// 1. Skapa spärr:
+// const loginLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, 
+//   max: 5, 
+//   message: { success: false, message: "Too many login attempts, please try again later." }
+// });
+
+// 2. APPLICERA SPÄRR: Lägg till 'loginLimiter' i endpointen
+// app.post("/login", loginLimiter, async (req, res) => {
+//   try {
+//     const { login, password } = req.body
+//     const user = await User.findOne({
+//       $or: [{ username: login }, { email: login }]
+//     })
+
+// 3. MODIFIERAT FELMEDDELANDE 1: Säg inte att kontot saknas utan generellt meddelande:
+//     if (!user) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Invalid username, email or password",
+//         response: null,
+//       })
+//     }
+
+//     const passwordMatch = await bcrypt.compare(password, user.password)
+
+// (!passwordMatch) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Invalid username, email or password",
+//         response: null,
+//       })
+//     }
+
+
     const accessToken = jwt.sign(
       { userId: user._id, username: user.username },
       process.env.JWT_SECRET,
@@ -186,6 +229,10 @@ app.patch("/messages/:id", authenticateUser, async (req, res) => {
 
 // För att säkerställa att endast ägaren av ett meddelande kan redigera det, kontrollerade vi att i PATCH-routen för uppdatering av meddelanden.
 // Detta fanns redan och den jämför den inloggade användarens ID (från JWT-token) med det userId som är kopplat till meddelandet i databasen.
+
+// Dock saknas Krav 2 (Indatavalidering) FRÅN FAS 1 i både app.post och app.patch: 
+// Meddelanden valideras inte i båda endpoints. Via meddelanden kan en angripare skicka skadlig kod som sparas blint rakt in i databasen.
+// Applikationen är helt öppen för XSS. Modifiera koden så meddelandet städas innan den skickas till databasen.
 
 
 app.delete("/messages/:id", async (req, res) => { 
