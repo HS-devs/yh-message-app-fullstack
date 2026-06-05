@@ -17,3 +17,8 @@ Server.js app.get rad 124-157
 
 Sever.js app.patch rad 172 - 173
 
+Frontend - server.js: return res.status rad 100-103
+- Föreslagit ändring av felmeddelande för att minksa risken att någon kan se vilka konton som finns.
+
+Backend - models/Message.js: rad 18 - 20
+- Har lagt in förslag om att lägga in en begrännsning på längden av meddelandet.

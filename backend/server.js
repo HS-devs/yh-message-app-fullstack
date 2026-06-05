@@ -97,6 +97,11 @@ app.post("/login", async (req, res) => {
       })
     }
 
+    // Ändra felmeddelande för att inte avslöja om det var användarnamnet eller lösenordet som var felaktigt.
+    // Detta är en säkerhetsåtgärd för att förhindra att angripare får information om vilka användarnamn som finns i systemet.
+    // Vi returnerar samma felmeddelande oavsett om det var användarnamnet eller lösenordet som var fel.
+    // Exempel på ändrat felmeddelande: message: "Invalid login or password"
+
     const accessToken = jwt.sign(
       { userId: user._id, username: user.username },
       process.env.JWT_SECRET,

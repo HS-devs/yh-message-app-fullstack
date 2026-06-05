@@ -15,4 +15,8 @@ createdAt: {
   },
 })
 
+// Skapa en begränsning på längden av meddelandet.
+// Detta är en säkerhetsåtgärd för att förhindra att användare skickar mycket långa meddelanden,
+// som i sin tur kan orsaka prestandaproblem eller överbelasta databasen.
+
 export const Message = mongoose.model("Message", messageSchema)
