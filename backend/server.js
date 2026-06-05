@@ -97,12 +97,10 @@ app.post("/login", async (req, res) => {
       })
     }
 
-<<<<<<< HEAD
     // Ändra felmeddelande för att inte avslöja om det var användarnamnet eller lösenordet som var felaktigt.
     // Detta är en säkerhetsåtgärd för att förhindra att angripare får information om vilka användarnamn som finns i systemet.
     // Vi returnerar samma felmeddelande oavsett om det var användarnamnet eller lösenordet som var fel.
     // Exempel på ändrat felmeddelande: message: "Invalid login or password"
-=======
     //Dataläcka med felmeddelande. FRÅN FAS 1: Hot mot pilen "JSON-svar" (I - Information Disclosure): Läckage av känslig data.
     // Angriparen får reda på om användaren redan finns eller inte eftersom svaret är "Password is incorrect" eller "No account found with that username or email". 
     // För att undvika detta bör vi använda ett generellt felmeddelande som inte avslöjar vilken del av inloggningen som misslyckades.
@@ -145,7 +143,6 @@ app.post("/login", async (req, res) => {
 //       })
 //     }
 
->>>>>>> b82a7a7bcb828c4b9960cc02d3c49daca595580a
 
     const accessToken = jwt.sign(
       { userId: user._id, username: user.username },
