@@ -99,27 +99,27 @@ app.post("/login", async (req, res) => {
       })
     }
 
-    // 5. LYCKAD INLOGGNING: Hit kommer koden BARA om både användaren fanns OCH lösenordet var rätt!
-    const accessToken = jwt.sign(
+    // 5. LYCKAD INLOGGNING: Hit kommer man om både användaren fanns och lösenordet var rätt!
+      const accessToken = jwt.sign(
       { userId: user._id, username: user.username },
       process.env.JWT_SECRET,
       { expiresIn: "2h" }
     )
 
-    res.status(200).json({
+    res.json({
       success: true,
-      message: "Login successful",
+      message: "Logged in successfully",
       response: {
         username: user.username,
         id: user._id,
         accessToken,
       },
     })
-
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: "Something went wrong",
+      error: error,
     })
   }
 })
@@ -173,29 +173,7 @@ app.post("/login", async (req, res) => {
 //     }
 
 
-    const accessToken = jwt.sign(
-      { userId: user._id, username: user.username },
-      process.env.JWT_SECRET,
-      { expiresIn: "2h" }
-    )
 
-    res.json({
-      success: true,
-      message: "Logged in successfully",
-      response: {
-        username: user.username,
-        id: user._id,
-        accessToken,
-      },
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      error: error,
-    })
-  }
-})
 
 const isValidId = (id) => mongoose.Types.ObjectId.isValid(id)
 
