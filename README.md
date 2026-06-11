@@ -35,3 +35,7 @@ Frontend - server.js: return res.status rad 100-103
 
 Backend - models/Message.js: rad 18 - 20
 - Har lagt in förslag om att lägga in en begrännsning på längden av meddelandet.
+
+Server.js - app.post login
+- SÄKERHETSFÖRBÄTTRING: Generellt felmeddelande för inloggning
+- även lagt in ny kod som säkerhetsval

@@ -80,23 +80,52 @@ app.post("/login", async (req, res) => {
       $or: [{ username: login }, { email: login }]
     })
 
-    if (!user) {
+    // 1. SKAPA EN DUMMY-HASH: Den används bara om användaren INTE hittas.
+    const dummyHash = "$2b$10$AzR7R.JvG7p0H2A9kYvOLeEa8yI1yZpE8fXfH1g7m7f8i9o0p1q2r"
+
+    // 2. VÄLJ STRÄNG ATT JÄMFÖRA MED: Finns användaren? Ta dess riktiga hash. Finns den inte? Ta dummy-hashen.
+    const hashToCompare = user ? user.password : dummyHash
+
+    // 3. KÖR BCRYPT: Detta tar alltid ~80-100ms och stoppar timing-attacker
+    const passwordMatch = await bcrypt.compare(password, hashToCompare)
+
+    // 4. KONTROLLERA OM NÅGOT GICK FEL: 
+    // Om användaren inte fanns ELLER om lösenordet inte matchade, skicka samma fel.
+    if (!user || !passwordMatch) {
       return res.status(401).json({
         success: false,
-        message: "No account found with that username or email",
+        message: "Invalid username/email or password",
         response: null,
       })
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password)
-    if (!passwordMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Password is incorrect",
-        response: null,
-      })
-    }
+    // 5. LYCKAD INLOGGNING: Hit kommer koden BARA om både användaren fanns OCH lösenordet var rätt!
+    const accessToken = jwt.sign(
+      { userId: user._id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "2h" }
+    )
 
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      response: {
+        username: user.username,
+        id: user._id,
+        accessToken,
+      },
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    })
+  }
+})
+
+
+    // SÄKERHETSFÖRBÄTTRING: Generellt felmeddelande för inloggning
     // Ändra felmeddelande för att inte avslöja om det var användarnamnet eller lösenordet som var felaktigt.
     // Detta är en säkerhetsåtgärd för att förhindra att angripare får information om vilka användarnamn som finns i systemet.
     // Vi returnerar samma felmeddelande oavsett om det var användarnamnet eller lösenordet som var fel.
