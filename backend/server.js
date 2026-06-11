@@ -246,7 +246,6 @@ app.delete("/messages/:id", async (req, res) => {
     if (!message) return res.status(404).json({ error: "Message not found" })
     }
 
-    // Hit kommer koden BARA om kontrollen nedan var godkänd
     await message.deleteOne()
     res.status(204).send()
   } catch (error) {
@@ -254,6 +253,7 @@ app.delete("/messages/:id", async (req, res) => {
   }
 })
 
+// Hit kommer koden BARA om kontrollen nedan var godkänd (flyttad text)
 //Strikt behörighetskontroll vid dataändring. Motverkar E (Elevation of Privilege) i STRIDE inom Express. 
 // Koden raderar meddelandet utan att kontrollera vem användaren är. 
 // Vi måste modifiera koden så att den jämför den inloggade användarens ID med meddelandets userId innan raderingen tillåts.
