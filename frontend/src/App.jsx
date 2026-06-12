@@ -65,7 +65,7 @@ export const App = () => {
           mode={modal}
           onClose={() => setModal(null)}
           onSuccess={(data) => { 
-            console.log("User logged in:", data)
+            // console.log("User logged in:", data)
             setUser(data) 
             setModal(null) 
           }}
