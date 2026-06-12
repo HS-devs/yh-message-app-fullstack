@@ -8,7 +8,7 @@ fas 1. Fokus har legat på kommunikationen mellan frontend och backend, hanterin
 De verktyg som har varit mest relevanta för projektet är CodeQL och Dependabot. CodeQL används för att hitta riskabla kodmönster, medan Dependabot används för att upptäcka sårbara eller gamla dependencies.
 Utöver verktygen har vi även gjort en manuell granskning och tagit hjälp av andra LLM:er, eftersom vissa brister såsom console.log inte alltid upptäcks automatiskt.
 
-En av de tydligaste säkerhetsbristerna är att backend behöver vara den plats där behörighet kontrolleras, det vill säga vilken som har behörighet att radera meddelande i appen.
+En av de tydligaste säkerhetsbristerna är att backend behöver vara den plats där behörighet kontrolleras, till exempel vem som har behörighet att radera meddelanden i appen.
 Frontend kan dölja knappar och styra användarflödet, men det räcker inte som säkerhet.
 En användare kan alltid skicka anrop direkt mot API:t.
 Därför bör routes som ändrar eller raderar data alltid kräva autentisering och kontrollera att användaren äger den data som ändras.
