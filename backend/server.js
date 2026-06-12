@@ -251,7 +251,7 @@ app.delete("/messages/:id", async (req, res) => {
   try {
     const message = await Message.findById(req.params.id)
     if (!message) return res.status(404).json({ error: "Message not found" })
-    }
+    
 
     await message.deleteOne()
     res.status(204).send()
