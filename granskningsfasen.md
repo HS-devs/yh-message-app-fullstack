@@ -1,6 +1,6 @@
 # Inlämning 3 - Granskningsfasen
 
-Granskningsrapport – Fas 3
+### Granskningsrapport – Fas 3
 
 I granskningen har vi gått igenom applikationen utifrån de säkerhetskrav som sattes i
 fas 1. Fokus har legat på kommunikationen mellan frontend och backend, hantering av användarinloggning, behörighetskontroll och skydd mot för många anrop.
@@ -12,11 +12,11 @@ En av de tydligaste säkerhetsbristerna är att backend behöver vara den plats 
 Frontend kan dölja knappar och styra användarflödet, men det räcker inte som säkerhet.
 En användare kan alltid skicka anrop direkt mot API:t.
 Därför bör routes som ändrar eller raderar data alltid kräva autentisering och kontrollera att användaren äger den data som ändras.
-Detta kopplas till OWASP: Broken Access Control.
+Detta kopplas till OWASP: *Broken Access Control*.
 
 Vi identifierade även att login-flödet bör skyddas bättre. Felmeddelanden vid misslyckad inloggning bör vara generiska, så att systemet inte avslöjar om användarnamnet eller lösenordet var fel.
 Dessutom bör rate limiting införas på login och andra känsliga routes för att minska risken för brute force och DoS-liknande belastning vilket vi kan koppla till
-OWASP: Identification and Authentication Failures, eftersom det handlar om att stärka autentiseringsflödet och skydda inloggningen från missbruk.
+OWASP: *Identification and Authentication Failures*, eftersom det handlar om att stärka autentiseringsflödet och skydda inloggningen från missbruk.
 
 I frontend bör loggar som skriver ut användardata eller access token tas bort.
 Sådana loggar kan vara användbara under utveckling, men i färdig kod innebär de en onödig risk för informationsläckage.
